@@ -11,7 +11,7 @@ const { getCasasBahiaProducts } = require("./utils/casas-bahia");
 const { getKabumProducts } = require("./utils/kabum");
 const { getMagazineLuizaProducts } = require("./utils/magazine-luiza");
 const { getMercadoLivreProducts } = require("./utils/mercado-livre");
-const { main } = require("./lasso_regression_search.mjs");
+const { main } = require("./lasso_regression_search.js");
 
 const app = express();
 const PORT = process.env.PORT ?? 3000;
