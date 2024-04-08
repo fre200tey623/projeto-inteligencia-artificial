@@ -1,8 +1,6 @@
 import React from "react";
 
-export default function Result() {
-  const avaliacoes = Array.from({ length: 5 }, (_, index) => index + 1);
-
+export default function Result(betterProduct) {
   return (
     <div className="flex flex-col w-full items-center gap-8 mt-12">
       <label>Encontrei uma recomendação para sua busca</label>
@@ -12,25 +10,29 @@ export default function Result() {
         </div>
         <div className="w-full pt-6 flex flex-col justify-between">
           <div>
-          <div>
-            <h1 className="text-sm md:text-xl">
-              Usado: iPhone 11 128GB Branco Bom - Trocafone
-            </h1>
-            <p>R$ 9.999,00</p>
-          </div>
-          <div className="flex gap-1 md:gap-4">
             <div>
-              {avaliacoes.map((avaliacao, index) => (
-                <span key={index}>★</span>
-              ))}
+              <h1 className="text-sm md:text-xl">{betterProduct.name}</h1>
+              <p>R${betterProduct.price}</p>
             </div>
-            <div>4,5 (1000 avaliações)</div>
+            <div className="flex gap-1 md:gap-4">
+              <div>
+                {betterProduct.aval.round().map((_, index) => (
+                  <span key={index}>★</span>
+                ))}
+              </div>
+              <div>
+                {betterProduct.aval} ({betterProduct.numAval} avaliações)
+              </div>
+            </div>
           </div>
-            </div>
           <div className="flex justify-center">
-            <button className="px-4 py-2 mb-5 md:mb-10 bg-white rounded-full text-gray-700 font-semibold text-sm">
+            <a
+              href={betterProduct.link}
+              target="_blank"
+              className="px-4 py-2 mb-5 md:mb-10 bg-white rounded-full text-gray-700 font-semibold text-sm"
+            >
               Acessar produto
-            </button>
+            </a>
           </div>
         </div>
       </div>

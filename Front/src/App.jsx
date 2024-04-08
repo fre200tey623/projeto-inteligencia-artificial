@@ -11,14 +11,31 @@ import { IoSearch } from "react-icons/io5";
 import Loading from "./components/Loading";
 import Result from "./components/Result";
 
+import axios from "axios";
+
 function App() {
   const [valorPesquisa, setValorPesquisa] = useState("");
   const [visivel, setVisivel] = useState(true);
+  const [betterProduct, setBetterProduct] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const pesquisar = (event) => {
     if (event.key === "Enter") {
       event.preventDefault();
-      console.log(valorPesquisa);
+
+      setLoading(true);
+
+      axios
+        .get(`http://localhost:3000/?search=${valorPesquisa}`)
+        .then((response) => {
+          setBetterProduct(response.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
     }
   };
 
@@ -85,8 +102,10 @@ function App() {
                 />
               </div>
             </div>
-            {/* <Loading /> */}
-            {!visivel && <Result />}
+            {loading && <Loading />}
+            {!visivel && betterProduct && (
+              <Result betterProduct={betterProduct} />
+            )}
           </div>
         </Layout>
       </div>
