@@ -9,6 +9,7 @@ import Kabum from "./assets/kabum.png";
 import Layout from "./components/Layoult";
 import { IoSearch } from "react-icons/io5";
 import Loading from "./components/Loading";
+import Result from "./components/Result";
 
 
 function App() {
@@ -69,6 +70,9 @@ function App() {
               </div>
             </div>
             {/* <Loading /> */}
+            {/* {
+              !visivel && <Result />
+            } */}
           </div>
         </Layout>
       </div>
