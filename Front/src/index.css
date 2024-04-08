@@ -28,3 +28,12 @@
   height: 100%;
   min-height: 40vh;
 }
+
+@media screen and (max-width: 768px) {
+  .gradient-container {
+    background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.1));
+    height: 100%;
+    min-height: 30vh;
+  }
+  
+}
