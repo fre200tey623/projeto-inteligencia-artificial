@@ -17,5 +17,14 @@
   input{
     font-family: "Poppins", sans-serif;
   }
+  button{
+    font-family: "Poppins", sans-serif;
+  }
 
+}
+
+.gradient-container {
+  background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.1));
+  height: 100%;
+  min-height: 40vh;
 }
