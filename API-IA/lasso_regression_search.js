@@ -139,9 +139,18 @@ function main(allResults){
 	let melhorCustoBenefico = Number.POSITIVE_INFINITY;
 	let indice = 0;
 
+		
+	function predictPrice(x, weights, intercept) {
+		let result = intercept;
+		for (let i = 0; i < x.length; i++) {
+			result += x[i] * weights[i];
+		}
+		return result;
+	}
+
 	// Função para prever a relação custo/benefício de um novo produto
-	function preverCustoBeneficio(preco) {
-		const valorTemporario = predict([preco, 1], weights, intercept);
+	function preverCustoBeneficio(preco, nota) {
+		const valorTemporario = predictPrice([preco, nota], weights, intercept);
 		if(valorTemporario < melhorCustoBenefico){
 			melhorCustoBenefico = valorTemporario;
 			return true;
@@ -150,7 +159,7 @@ function main(allResults){
 	}
 
 	for(let i = 0; i < precos.length; i++){
-		if(preverCustoBeneficio(precos[i])){
+		if(preverCustoBeneficio(precos[i], notas[i])){
 			indice = i;
 		}
 	}
