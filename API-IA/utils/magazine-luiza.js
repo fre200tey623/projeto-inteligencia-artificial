@@ -32,6 +32,18 @@ async function getMagazineLuizaProducts(browser, searchfor) {
 
       await page.goto(link);
       //     await page.waitForSelector('.ui-pdp-title');
+      let imgUrl = "";
+
+      new Promise (resolve => setTimeout(resolve, 2000));
+      try {
+        imgUrl = await page.$eval(".sc-cWSHoV.jnuWYf", (element) =>
+          element.getAttribute("src")
+        );
+      }
+      catch (error) {
+        imgUrl = "https://www.magazineluiza.com.br/assets/img/luizacode/luizacode-logo.png";
+      }
+
       let title = "";
       try {
         title = await page.$eval(
@@ -42,14 +54,15 @@ async function getMagazineLuizaProducts(browser, searchfor) {
         title = "Produto sem nome";
       }
       let price = "";
-      try {
-        price = await page.$eval(
-          ".sc-kpDqfm.eCPtRw.sc-bOhtcR.dOwMgM",
-          (element) => element.innerText
-        );
-      } catch (error) {
-        price = "Produto sem preço";
-      }
+
+        priceArray = await page.evaluate(() => {
+          return Array.from(
+            document.querySelectorAll(
+              ".sc-kpDqfm.eCPtRw.sc-bOhtcR.dOwMgM"
+            )
+          ).map((el) => el.innerText);
+        });
+        price = priceArray[priceArray.length - 1];
 
       let aval = "";
       let numAval = "";
@@ -83,6 +96,7 @@ async function getMagazineLuizaProducts(browser, searchfor) {
         aval: aval,
         numAval: numAvalFinal,
         link: link,
+        imgUrl: imgUrl,
       };
 
       results.push(product);

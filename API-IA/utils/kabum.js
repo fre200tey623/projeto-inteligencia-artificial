@@ -29,6 +29,19 @@ async function getKabumProducts(browser, searchfor) {
       await page.goto(link);
       //     await page.waitForSelector('.ui-pdp-title');
 
+      let imgUrl = "";
+      new Promise (resolve => setTimeout(resolve, 2000));
+      try {
+        imgUrl = await page.evaluate(() => {
+        const element = document.querySelector('.image');
+        return element.children[0].getAttribute("src");
+        
+        });
+      }
+      catch (error) {
+        imgUrl = "sem imagem"
+      }
+
       let title = "";
 
       try {
@@ -73,6 +86,7 @@ async function getKabumProducts(browser, searchfor) {
       }
 
       let product = {
+        imgUrl: imgUrl,
         title: title,
         price: price.replaceAll("\n", "").replace("R$", "").trim(),
         aval: aval,

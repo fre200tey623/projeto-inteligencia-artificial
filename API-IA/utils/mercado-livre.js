@@ -28,6 +28,17 @@ async function getMercadoLivreProducts(browser, searchfor) {
     for (const link of links) {
       await page.goto(link);
 
+      let imgUrl = "";
+      new Promise (resolve => setTimeout(resolve, 2000));
+      try {
+        imgUrl = await page.$eval(".ui-pdp-image.ui-pdp-gallery__figure__image", (element) =>
+          element.getAttribute("src")
+        );
+      }
+      catch (error) {
+        imgUrl = "sem imagem"
+      }
+
       let title = "";
 
       try {
@@ -71,6 +82,7 @@ async function getMercadoLivreProducts(browser, searchfor) {
         aval: aval,
         numAval: numAvalFinal,
         link: link,
+        imgUrl: imgUrl,
       };
 
       results.push(product);
