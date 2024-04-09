@@ -3,6 +3,7 @@
 /* eslint-disable linebreak-style */
 /* eslint-disable @typescript-eslint/no-var-requires */
 const express = require("express");
+const cors = require("cors");
 const puppeteer = require("puppeteer");
 
 const { getAmazonProducts } = require("./utils/amazon");
@@ -15,6 +16,15 @@ const { main } = require("./lasso_regression_search");
 
 const app = express();
 const PORT = process.env.PORT ?? 3000;
+
+app.use(
+  cors({
+    origin: "*",
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true,
+  })
+);
 
 app.get("/", async (req, res) => {
   const browser = await puppeteer.launch({
@@ -58,38 +68,28 @@ app.get("/", async (req, res) => {
 
     atLeastOne =
       atLeastOne ||
-      (amazonResults && amazonResults.length > 0) ||
+      amazonResults ||
       // (americanasResults && americanasResults.length > 0) ||
       // (casasBahiaResults && casasBahiaResults.length > 0);
-      (kabumResults && kabumResults.length > 0) ||
-      (magazineLuizaResults && magazineLuizaResults.length > 0) ||
-      (mercadoLivreResults && mercadoLivreResults.length > 0);
+      kabumResults ||
+      magazineLuizaResults ||
+      mercadoLivreResults;
 
     if (!atLeastOne) {
       return res.status(404).json({ message: "Nenhum produto encontrado" });
     }
 
     let allResults = [
-      ...amazonResults,
+      ...(amazonResults ?? []),
       // ...americanasResults,
       // ...casasBahiaResults,
-      ...kabumResults,
-      ...magazineLuizaResults,
-      ...mercadoLivreResults,
+      ...(kabumResults ?? []),
+      ...(magazineLuizaResults ?? []),
+      ...(mercadoLivreResults ?? []),
     ];
-
-    console.log(allResults);
 
     allResults = allResults.filter((result) => {
       return result.price && result.price > 0;
-    });
-
-    allResults = allResults.map((result) => {
-      result.price = parseFloat(
-        result.price.replaceAll(".", "").replace(",", ".")
-      );
-      result.aval = parseInt(result.aval.includes("Não") ? 1 : result.aval);
-      result.numAval = parseInt(result.numAval);
     });
 
     allResults = allResults.filter((result) => {
@@ -98,18 +98,22 @@ app.get("/", async (req, res) => {
         search.startsWith("celular") ||
         search.startsWith("iphone")
       ) {
-        return result.price > 400;
+        return result.price > 200;
       }
+
+      return true;
     });
 
-    allResults = allResults.filter((result) => {
-      const queryParts = search.split(" ");
+    console.log(allResults);
 
-      for (const queryPart of queryParts) {
-        if (!result.title.toLowerCase().includes(queryPart.toLowerCase())) {
-          return false;
-        }
-      }
+    allResults = allResults.filter((result) => {
+      const matchPoints = search
+        .split(" ")
+        .filter((part) =>
+          result.title.toLowerCase().includes(part.toLowerCase())
+        ).length;
+
+      return matchPoints === search.split(" ").length;
     });
 
     allResults = allResults.sort((a, b) => a.price - b.price);
@@ -123,7 +127,7 @@ app.get("/", async (req, res) => {
     console.error(error);
     res.status(500).json({ message: "Erro interno" });
   } finally {
-    // await browser.close();
+    await browser.close();
   }
 });
 

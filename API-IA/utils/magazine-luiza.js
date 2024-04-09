@@ -24,7 +24,12 @@ async function getMagazineLuizaProducts(browser, searchfor) {
       (el) => el.map((link) => link.href)
     );
 
+    let i = 0;
     for (const link of links) {
+      if (i === 20) {
+        break;
+      }
+
       await page.goto(link);
       //     await page.waitForSelector('.ui-pdp-title');
       let title = "";
@@ -81,7 +86,20 @@ async function getMagazineLuizaProducts(browser, searchfor) {
       };
 
       results.push(product);
+      i++;
     }
+
+    results.map((result) => {
+      result.price = parseFloat(
+        result.price.replaceAll(".", "").replace(",", ".")
+      );
+
+      result.aval = parseInt(result.aval.includes("Não") ? 1 : result.aval);
+
+      result.numAval = parseInt(
+        result.numAval.includes("Não") ? 0 : result.numAval
+      );
+    });
 
     return results;
   } catch (error) {

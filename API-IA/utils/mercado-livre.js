@@ -76,6 +76,18 @@ async function getMercadoLivreProducts(browser, searchfor) {
       results.push(product);
     }
 
+    results.map((result) => {
+      result.price = parseFloat(
+        result.price.replaceAll(".", "").replace(",", ".")
+      );
+
+      result.aval = parseInt(result.aval.includes("Não") ? 1 : result.aval);
+
+      result.numAval = parseInt(
+        result.numAval.includes("Não") ? 0 : result.numAval
+      );
+    });
+
     return results;
   } catch (error) {
     console.error(error);

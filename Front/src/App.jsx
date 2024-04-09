@@ -28,7 +28,8 @@ function App() {
       axios
         .get(`http://localhost:3000/?search=${valorPesquisa}`)
         .then((response) => {
-          setBetterProduct(response.data);
+          console.log(response.data);
+          setBetterProduct(response.data.data);
         })
         .catch((error) => {
           console.log(error);

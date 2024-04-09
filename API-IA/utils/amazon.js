@@ -61,7 +61,7 @@ async function getAmazonProducts(browser, query) {
         }
 
         const newProduct = {
-          name: name.innerText,
+          title: name.innerText,
           price: value,
           aval,
           numAval,

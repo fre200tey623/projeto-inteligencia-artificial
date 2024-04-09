@@ -90,7 +90,9 @@ async function getKabumProducts(browser, searchfor) {
 
       result.aval = parseInt(result.aval.includes("Não") ? 1 : result.aval);
 
-      result.numAval = parseInt(result.numAval);
+      result.numAval = parseInt(
+        result.numAval.includes("Não") ? 0 : result.numAval
+      );
     });
 
     return results;
