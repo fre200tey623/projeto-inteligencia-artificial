@@ -136,7 +136,7 @@ function main(allResults){
 		console.log("X não é uma matriz válida.");
 	}
 
-	let melhorCustoBenefico = Number.POSITIVE_INFINITY;
+	let melhorCustoBenefico = Number.NEGATIVE_INFINITY;
 	let indice = 0;
 
 		
@@ -151,7 +151,7 @@ function main(allResults){
 	// Função para prever a relação custo/benefício de um novo produto
 	function preverCustoBeneficio(preco, nota) {
 		const valorTemporario = predictPrice([preco, nota], weights, intercept);
-		if(valorTemporario < melhorCustoBenefico){
+		if(valorTemporario > melhorCustoBenefico){
 			melhorCustoBenefico = valorTemporario;
 			return true;
 		}
