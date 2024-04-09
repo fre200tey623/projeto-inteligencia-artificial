@@ -13,7 +13,7 @@ export default function Result(betterProduct) {
       <div className="flex gradient-container w-full rounded-3xl gap-4 md:gap-12">
         <div className="flex justify-center items-center pl-4 md:pl-8">
           <img
-            className="h-full w-full min-w-[200px] max-w-[200px]"
+            className="h-full w-full min-w-[200px]"
             src={finalData.imgUrl}
             alt="Imagem do Produto"
           />
