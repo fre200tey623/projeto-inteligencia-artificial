@@ -60,7 +60,7 @@ function App() {
                 <div className="flex gap-3 md:gap-10 flex-col">
                   <div className="flex gap-4 flex-col">
                     <h1 className="text-2xl font-semibold">
-                      Bem-vindo ao Nosso Site de Pesquisa!
+                      Bem-vindo ao Super Search!
                     </h1>
                     <p className="text-sm  md:text-lg">
                       Com nossa inteligência artificial avançada, basta digitar
