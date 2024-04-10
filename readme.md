@@ -1,6 +1,9 @@
 Projeto de Inteligencia Artificial realizado pelos alunos:
 <br>
 ANDRÉ LUCAS ÁVILA LIMA
+<br>
 JOSÉ CLENILDO MENEZES SILVA SOBRINHO
+<br>
 PAULO RICARDO DE JESUS LIMA
+<br>
 SAMUEL AUGUSTO SOUZA ALVES SANTANA
