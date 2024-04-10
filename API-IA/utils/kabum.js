@@ -30,16 +30,14 @@ async function getKabumProducts(browser, searchfor) {
       //     await page.waitForSelector('.ui-pdp-title');
 
       let imgUrl = "";
-      new Promise (resolve => setTimeout(resolve, 2000));
+      new Promise((resolve) => setTimeout(resolve, 2000));
       try {
         imgUrl = await page.evaluate(() => {
-        const element = document.querySelector('.image');
-        return element.children[0].getAttribute("src");
-        
+          const element = document.querySelector(".image");
+          return element.children[0].getAttribute("src");
         });
-      }
-      catch (error) {
-        imgUrl = "sem imagem"
+      } catch (error) {
+        imgUrl = "sem imagem";
       }
 
       let title = "";
@@ -108,6 +106,8 @@ async function getKabumProducts(browser, searchfor) {
         result.numAval.includes("Não") ? 0 : result.numAval
       );
     });
+
+    console.log("Kabum Products");
 
     return results;
   } catch (error) {

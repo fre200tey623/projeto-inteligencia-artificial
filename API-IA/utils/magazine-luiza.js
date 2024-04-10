@@ -34,14 +34,14 @@ async function getMagazineLuizaProducts(browser, searchfor) {
       //     await page.waitForSelector('.ui-pdp-title');
       let imgUrl = "";
 
-      new Promise (resolve => setTimeout(resolve, 2000));
+      new Promise((resolve) => setTimeout(resolve, 2000));
       try {
         imgUrl = await page.$eval(".sc-cWSHoV.jnuWYf", (element) =>
           element.getAttribute("src")
         );
-      }
-      catch (error) {
-        imgUrl = "https://www.magazineluiza.com.br/assets/img/luizacode/luizacode-logo.png";
+      } catch (error) {
+        imgUrl =
+          "https://www.magazineluiza.com.br/assets/img/luizacode/luizacode-logo.png";
       }
 
       let title = "";
@@ -55,14 +55,12 @@ async function getMagazineLuizaProducts(browser, searchfor) {
       }
       let price = "";
 
-        priceArray = await page.evaluate(() => {
-          return Array.from(
-            document.querySelectorAll(
-              ".sc-kpDqfm.eCPtRw.sc-bOhtcR.dOwMgM"
-            )
-          ).map((el) => el.innerText);
-        });
-        price = priceArray[priceArray.length - 1];
+      priceArray = await page.evaluate(() => {
+        return Array.from(
+          document.querySelectorAll(".sc-kpDqfm.eCPtRw.sc-bOhtcR.dOwMgM")
+        ).map((el) => el.innerText);
+      });
+      price = priceArray[priceArray.length - 1];
 
       let aval = "";
       let numAval = "";
@@ -114,6 +112,8 @@ async function getMagazineLuizaProducts(browser, searchfor) {
         result.numAval.includes("Não") ? 0 : result.numAval
       );
     });
+
+    console.log("Magazine Luiza Products");
 
     return results;
   } catch (error) {

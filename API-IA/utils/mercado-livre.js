@@ -29,14 +29,14 @@ async function getMercadoLivreProducts(browser, searchfor) {
       await page.goto(link);
 
       let imgUrl = "";
-      new Promise (resolve => setTimeout(resolve, 2000));
+      new Promise((resolve) => setTimeout(resolve, 2000));
       try {
-        imgUrl = await page.$eval(".ui-pdp-image.ui-pdp-gallery__figure__image", (element) =>
-          element.getAttribute("src")
+        imgUrl = await page.$eval(
+          ".ui-pdp-image.ui-pdp-gallery__figure__image",
+          (element) => element.getAttribute("src")
         );
-      }
-      catch (error) {
-        imgUrl = "sem imagem"
+      } catch (error) {
+        imgUrl = "sem imagem";
       }
 
       let title = "";
@@ -99,6 +99,8 @@ async function getMercadoLivreProducts(browser, searchfor) {
         result.numAval.includes("Não") ? 0 : result.numAval
       );
     });
+
+    console.log("Mercado Livre Results");
 
     return results;
   } catch (error) {

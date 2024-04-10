@@ -28,7 +28,7 @@ app.use(
 
 app.get("/", async (req, res) => {
   const browser = await puppeteer.launch({
-    headless: false,
+    headless: "new",
     defaultViewport: null,
     args: [
       "--disable-web-security",
@@ -48,23 +48,28 @@ app.get("/", async (req, res) => {
 
     let atLeastOne = false;
 
+    const promises = [];
+
+    promises.push(getAmazonProducts(browser, search));
+
+    await new Promise((resolve) => setTimeout(resolve, 7000));
+
+    promises.push(getKabumProducts(browser, search));
+
+    await new Promise((resolve) => setTimeout(resolve, 7000));
+
+    promises.push(getMagazineLuizaProducts(browser, search));
+
+    await new Promise((resolve) => setTimeout(resolve, 7000));
+
+    promises.push(getMercadoLivreProducts(browser, search));
+
     const [
       amazonResults,
-      // americanasResults,
-      // casasBahiaResults,
       kabumResults,
       magazineLuizaResults,
       mercadoLivreResults,
-    ] = await Promise.all([
-      getAmazonProducts(browser, search),
-      // getAmericanasProducts(browser, search),
-      // getCasasBahiaProducts(browser, search),
-      getKabumProducts(browser, search),
-      getMagazineLuizaProducts(browser, search),
-      getMercadoLivreProducts(browser, search),
-    ]);
-
-    // rever algoritmo para kabum
+    ] = await Promise.all(promises);
 
     atLeastOne =
       atLeastOne ||
@@ -104,8 +109,6 @@ app.get("/", async (req, res) => {
       return true;
     });
 
-    console.log(allResults);
-
     allResults = allResults.filter((result) => {
       const matchPoints = search
         .split(" ")
@@ -118,9 +121,9 @@ app.get("/", async (req, res) => {
 
     allResults = allResults.sort((a, b) => a.price - b.price);
 
-    console.log(allResults);
-
     const betterProduct = main(allResults);
+
+    console.log(betterProduct);
 
     res.status(200).json(betterProduct);
   } catch (error) {

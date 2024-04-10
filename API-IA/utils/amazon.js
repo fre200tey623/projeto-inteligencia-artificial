@@ -21,6 +21,12 @@ async function getAmazonProducts(browser, query) {
       for (const element of elements) {
         const allText = element.innerText;
         const name = element.querySelector("div > div > div > h2 > a");
+        const img = element.querySelector("div > div > span > a > div > img");
+        const imgLink = img.src;
+
+        console.log(img.innerHTML);
+
+        console.log(imgLink);
 
         const matchPoints = queryParts.filter((part) =>
           name.innerText
@@ -66,10 +72,13 @@ async function getAmazonProducts(browser, query) {
           aval,
           numAval,
           link: name.href,
+          imgUrl: imgLink,
         };
 
         products.push(newProduct);
       }
+
+      console.log("Amazon Products");
 
       return products;
     }, query);
