@@ -1,0 +1,29 @@
+# Use a imagem oficial do Node.js
+FROM node:20
+
+# Instale o navegador Chrome e suas dependências
+RUN apt-get update
+RUN apt-get install -y wget gnupg
+
+# Get Chrome
+RUN wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | apt-key add -
+RUN sh -c 'echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
+RUN apt-get update
+RUN apt-get install -y google-chrome-stable
+
+# Configuração do diretório de trabalho dentro do container
+WORKDIR /app
+
+# Copia os arquivos do projeto para o diretório de trabalho do container
+COPY package.json .
+COPY package-lock.json .
+COPY . .
+
+# Instalação das dependências do projeto
+RUN npm install
+
+# Porta que será exposta pelo container
+EXPOSE 3000
+
+# Comando para iniciar a aplicação quando o container for iniciado
+CMD ["npm", "start"]

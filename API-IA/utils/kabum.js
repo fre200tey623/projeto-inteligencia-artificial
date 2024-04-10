@@ -2,6 +2,7 @@ const results = [];
 
 async function getKabumProducts(browser, searchfor) {
   try {
+    console.log("Kabum");
     const page = await browser.newPage();
     await page.goto("https://www.kabum.com.br/");
 

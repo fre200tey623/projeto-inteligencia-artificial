@@ -5,6 +5,7 @@ async function getMagazineLuizaProducts(browser, searchfor) {
   await page.goto("https://www.magazineluiza.com.br/");
 
   try {
+    console.log("Magazine Luiza");
     //função para esperar o selector
     await page.waitForSelector("#search-container");
 

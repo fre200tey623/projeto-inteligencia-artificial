@@ -1,5 +1,6 @@
 async function getAmazonProducts(browser, query) {
   try {
+    console.log("Amazon");
     const page = await browser.newPage();
 
     await page.goto("https://www.amazon.com.br/");

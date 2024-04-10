@@ -28,7 +28,7 @@ app.use(
 
 app.get("/", async (req, res) => {
   const browser = await puppeteer.launch({
-    headless: "new",
+    headless: true,
     defaultViewport: null,
     args: [
       "--disable-web-security",
@@ -37,9 +37,7 @@ app.get("/", async (req, res) => {
       "--start-maximized",
       "--disable-notifications",
     ],
-    pipe: true,
-    channel: "chrome",
-    product: "chrome",
+    executablePath: "/usr/bin/google-chrome",
     behavior: "allow",
   });
 

@@ -2,6 +2,7 @@ const results = [];
 
 async function getMercadoLivreProducts(browser, searchfor) {
   try {
+    console.log("Mercado Livre");
     const page = await browser.newPage();
     await page.goto("https://www.mercadolivre.com.br/");
 
